@@ -6,8 +6,8 @@ export default class Form extends Component {
         username:"swapnil",
         password:"Swapnil@123"
     },
-    passlen:6,
-    errors:{},
+    errorUser:"",
+    errorPass:{},
     bt_color:"btn btn-primary"
   };
   getClassName=()=>
@@ -42,26 +42,43 @@ export default class Form extends Component {
     if(result3)
     errors1.lenError="Passward length should be 6"
     console.log(errors1);
-    Object.keys(errors1).length!==0?this.setState({errors:errors1}):this.setState({errors:{}});
-    console.log(this.state.errors);
+    Object.keys(errors1).length!==0?this.setState({errorPass:errors1}):this.setState({errorPass:{}});
+    console.log(this.state.errorUser);
     //console.log(e.currentTarget.value.length+1);
     
     };
+    handleKeyPressUser=(e)=>
+    {
+      let errors="";
+      let regex=/^[A-za-z]/,regex2=/([a-zA-Z0-9@_]){9}/;
+      let result1=regex.test(e.currentTarget.value);
+      let result2=regex2.test(e.currentTarget.value);
+      if(!result1)
+      errors=errors+"Password should only start with an Alphabet";
+      if(!result2)
+      errors=errors+"Password should not contain symbol other than @ and _ and the whole length should be maximum 10";
+      errors!==""? this.setState({errorUser:errors}):this.setState({errorUser:""});
 
+    };
+    handleSubmit=(e)=>
+    {
+        e.preventDefault();
+    }
     render() {
     return (
         <>
-        <form className='from-group container' >
+        <form className='from-group container' onSubmit={this.handleSubmit} >
         <div className="mb-3">
         <label htmlFor="username" className="form-label">Username</label>
         <input name='username'  type="text" className="form-control" id="username" value={this.state.credential.username} onChange={this.handleChanger} 
-        onKeyPress={this.handleKeyPress} />
+        onKeyPress={this.handleKeyPressUser} />
+        {(this.state.errorUser!=="") && <div className='alert alert-danger'>{this.state.errorUser}</div>}
         </div> 
         <div className="mb-3">
         <label htmlFor="password" className="form-label">password</label>
         <input name='password' type="password" className="form-control" id="password" value={this.state.credential.password} onChange={this.handleChanger}
         onKeyPress={this.handleKeyPressPass} />
-         {(this.state.errors.startError!==undefined || this.state.errors.numError !==undefined || this.state.errors.numError) && <div className='alert alert-danger'><ul>{Object.keys(this.state.errors).map(er=>(<li key={er} >{this.state.errors[er]}</li>))}</ul></div>}
+         {(this.state.errorPass.startError!==undefined || this.state.errorPass.numError !==undefined || this.state.errorPass.numError) && <div className='alert alert-danger'><ul  >{Object.keys(this.state.errorPass).map(er=>(<li style={{ listStyleType:"none" }} key={er} >{this.state.errorPass[er]}</li>))}</ul></div>}
         </div>
         <button className={this.getClassName()} onMouseLeave={this.handleLeave} onMouseEnter={this.handleEnter}>submit</button>
         </form>     </>
