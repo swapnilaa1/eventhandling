@@ -29,6 +29,9 @@ export default class Form extends Component {
   }
   handleKeyPressPass=(e)=>
   {
+    this.state.credential.password=e.currentTarget.value;
+    this.setState({credential:this.state.credential});
+    console.log(this.state.credential.password);
     let errors1={} ;
     let regex=/^[A-Z]/ , regex2=/[0-9]/ ;
     let result1=regex.test(e.currentTarget.value);
@@ -81,7 +84,8 @@ export default class Form extends Component {
          {(this.state.errorPass.startError!==undefined || this.state.errorPass.numError !==undefined || this.state.errorPass.numError) && <div className='alert alert-danger'><ul  >{Object.keys(this.state.errorPass).map(er=>(<li style={{ listStyleType:"none" }} key={er} >{this.state.errorPass[er]}</li>))}</ul></div>}
         </div>
         <button className={this.getClassName()} onMouseLeave={this.handleLeave} onMouseEnter={this.handleEnter}>submit</button>
-        </form>     </>
+
+        </form> < ></>     </>
 
 
      
