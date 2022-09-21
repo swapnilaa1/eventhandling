@@ -3,8 +3,8 @@ import React, { Component } from 'react'
 export default class Form extends Component {
   state={
     credential:{
-        username:"swapnil",
-        password:"Swapnil@123"
+        username:"",
+        password:""
     },
     errorUser:"",
     errorPass:{},
@@ -29,9 +29,7 @@ export default class Form extends Component {
   }
   handleKeyPressPass=(e)=>
   {
-    this.state.credential.password=e.currentTarget.value;
-    this.setState({credential:this.state.credential});
-    console.log(this.state.credential.password);
+
     let errors1={} ;
     let regex=/^[A-Z]/ , regex2=/[0-9]/ ;
     let result1=regex.test(e.currentTarget.value);
@@ -74,18 +72,18 @@ export default class Form extends Component {
         <div className="mb-3">
         <label htmlFor="username" className="form-label">Username</label>
         <input name='username'  type="text" className="form-control" id="username" value={this.state.credential.username} onChange={this.handleChanger} 
-        onKeyPress={this.handleKeyPressUser} />
+        onKeyPress={this.handleKeyPressUser} placeholder="Its length should be 10 should start with an alphabet,characters allowed are @ and _  "/>
         {(this.state.errorUser!=="") && <div className='alert alert-danger'>{this.state.errorUser}</div>}
         </div> 
         <div className="mb-3">
         <label htmlFor="password" className="form-label">password</label>
         <input name='password' type="password" className="form-control" id="password" value={this.state.credential.password} onChange={this.handleChanger}
-        onKeyPress={this.handleKeyPressPass} />
+        onKeyPress={this.handleKeyPressPass} placeholder="Should start with capital alphabet,its length should be min 6 and must contain a number"/>
          {(this.state.errorPass.startError!==undefined || this.state.errorPass.numError !==undefined || this.state.errorPass.numError) && <div className='alert alert-danger'><ul  >{Object.keys(this.state.errorPass).map(er=>(<li style={{ listStyleType:"none" }} key={er} >{this.state.errorPass[er]}</li>))}</ul></div>}
         </div>
         <button className={this.getClassName()} onMouseLeave={this.handleLeave} onMouseEnter={this.handleEnter}>submit</button>
-
-        </form> < ></>     </>
+     
+        </form>     </>
 
 
      
